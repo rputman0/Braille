@@ -14,23 +14,32 @@ public class Braille extends Cells{
                 "4 5 6", "3", "3 5", "3 4", "3 4 6", "3 6", "3 4 5", "3 4 5 6", "3 4 5", "4 5"};
   
     public static void main(String[] args){
-      String message = "snow white";
+      String message = "snow white and the seven dwarfs";
       System.out.println(message);
-      toBraille(message);
+      printToBraille(message);
     }
     
-    //only works for messages with less than 25 char?
-    static void toBraille(String numbers){
-      if(numbers.length() > 25){
-        while(numbers.length() < 25)
-         //TODO: refactor loop to print only 25 characters per line, for entire string
-         braille(toNumbers(numbers.substring(0,25)));
-         braille(toNumbers(numbers.substring(25,50)));
-         braille(toNumbers(numbers.substring(50)));
-         System.out.println();
+    //each line can only be 25 characters
+    static void printToBraille(String numbers){
+      int length = numbers.length();
+     
+      //each line can only be 25 chars
+      if(length < 25)
+        braille(toNumbers(numbers));
+      else if(length < 50){
+        braille(toNumbers(numbers.substring(0,25)));
+        braille(toNumbers(numbers.substring(25)));
+      }
+      else if(length < 75){
+        braille(toNumbers(numbers.substring(0,25)));
+        braille(toNumbers(numbers.substring(25,50)));
+        braille(toNumbers(numbers.substring(50)));
       }
       else
-        braille(toNumbers(numbers));
+        System.out.println("Error: Print A Smaller String");
+        //The message should be less than 75 char
+        //or it will be too hard on the eyes
+      
     }
 
     static String[] toNumbers(String sentence){
